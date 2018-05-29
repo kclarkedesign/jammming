@@ -45,21 +45,26 @@ class App extends Component {
     } else {
       let newTrack = track.id;
       this.state.playlistTracks.push(newTrack);
-      console.log(this.state.playlistTracks);
+      // console.log(this.state.playlistTracks);
     }
   }
 
   removeTrack(track) {
     if(this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
-      this.state.playlistTracks = this.state.playlistTracks.filter(savedTrack => savedTrack.id !== track.id);
-      console.log(this.state.playlistTracks);
+      const updatedPlaylist = this.state.playlistTracks.filter(savedTrack => savedTrack.id !== track.id);
+      this.setState({
+        playlistTracks: updatedPlaylist
+      });
+      // console.log(this.state.playlistTracks);
     } else {
       return;
     }
   }
 
   updatePlaylistName(name) {
-    this.state.playlistName = name;
+    this.setState({
+      playlistName: name
+    });
   }
 
   render() {
