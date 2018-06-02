@@ -11,7 +11,7 @@ class App extends Component {
     super(props);
     this.state = {
       searchResults: [],
-      playlistName : "New Playlist",
+      playlistName : "",
       playlistTracks: []
     };
 
@@ -55,8 +55,8 @@ class App extends Component {
   	Spotify.savePlaylist(this.state.playlistName, URIarray);
   	this.setState({
   		playlistName : "New Playlist",
-      	playlistTracks: []
-  	})
+      playlistTracks: []
+  	});
   }
 
   search(searchTerm) {
