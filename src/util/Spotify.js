@@ -2,7 +2,7 @@ let accessToken;
 let expiresIn;
 let keepSearchTerm;
 const clientID = "6b086cffcede44c69f78fa6d63854a28";
-const redirectURI = "http://localhost:3000/";
+const redirectURI = "http://myspotified.surge.sh";
 const spotifyBaseURL = "https://api.spotify.com/v1";
 
 const Spotify = {
