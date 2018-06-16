@@ -1,6 +1,5 @@
 let accessToken;
 let expiresIn;
-let loggedIn;
 //let keepSearchTerm;
 
 const clientID = "6b086cffcede44c69f78fa6d63854a28";
@@ -37,8 +36,9 @@ const Spotify = {
 		} else {
 			if(!accessToken) {
 				localStorage.setItem('isLoggedin', true);
+				window.location = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
 			}
-			window.location = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
+			
 		}
 	},
 

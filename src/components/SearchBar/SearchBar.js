@@ -15,6 +15,7 @@ class SearchBar extends Component {
 
 	search() {
 		this.props.onSearch(this.state.term);
+		console.log(this.props);
 	}
 
 	handleTermChange(event) {
@@ -24,12 +25,22 @@ class SearchBar extends Component {
 	}
 
 	render() {
-		return (
-			<div className="SearchBar">
-				<input placeholder="Enter A Song Title" onChange={this.handleTermChange} />
-				<a onClick={this.search}>SEARCH {this.props.loggedIn}</a>
-			</div>
-		);
+		if(this.props.onLogIn === "true") {
+			return (
+				<div className="SearchBar">
+					<input placeholder="Enter A Song Title" onChange={this.handleTermChange} />
+					<a onClick={this.search}>SEARCH </a>
+				</div>
+			);
+		} else {
+			return (
+				<div className="SearchBar">
+					<h2 className="SearchBar__intro">Create Spotify playlists at your leisure!</h2>
+					<a onClick={this.search}>Sign into Spotify </a>
+				</div>
+			);
+		}
+		
 	}
 }
 

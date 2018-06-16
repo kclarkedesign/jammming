@@ -36,3 +36,9 @@
 .SearchBar a:hover {
   background-color: rgba(108, 65, 233, .7);
 }
+
+.SearchBar__intro {
+    padding-bottom: 20px;
+    text-align: center;
+    line-height: 1.3;
+}

@@ -21,7 +21,6 @@ class App extends Component {
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
-    this.updateLogInState = this.updateLogInState.bind(this);
   }
 
   
@@ -62,36 +61,37 @@ class App extends Component {
   	});
   }
 
-  updateLogInState() {
-   
-      this.setState({loggedIn: false});
-   
-    // if (value) {
-    //   this.setState({
-        
-    //   });
-    // }
-  } 
+  componentWillMount() {
+    let isLoggedIn = localStorage.getItem('isLoggedin', true);
+    if(isLoggedIn) {
+      this.setState({ loggedIn: isLoggedIn });
+    } else {
+      this.setState({ loggedIn: false });
+      localStorage.removeItem('isLoggedin');
+    }
+  }
 
   search(searchTerm) {
   	Spotify.search(searchTerm).then(track => {
 		  this.setState({searchResults: track});
     });
+
   }
 
   render() {
     return (
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
-        <div className="App">
-          <SearchBar onSearch={this.search} loggedIn={this.updateLogInState}/>
-          <div className="App-playlist" >
-            <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
+        <div className={this.state.loggedIn ? "App" : "App full-vh"}>
+          <SearchBar onSearch={this.search} onLogIn={this.state.loggedIn} />
+          <div className={this.state.loggedIn ? "App-playlist" : "App-playlist not-logged-in"} >
+            <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} onLogIn={this.state.loggedIn} />
             <Playlist 
             	playlistTracks={this.state.playlistTracks}
             	onRemove={this.removeTrack}
             	onNameChange={this.updatePlaylistName}
-            	onSave={this.savePlaylist}/>
+            	onSave={this.savePlaylist}
+              onLogIn={this.state.loggedIn} />
           </div>
         </div>
       </div>
