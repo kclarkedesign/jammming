@@ -62,12 +62,18 @@ class App extends Component {
   }
 
   componentWillMount() {
+    const pageUrl = window.location.href;
+    const accessTokenFromURL = pageUrl.match(/access_token=([^&]*)/);
+    if(!accessTokenFromURL) {
+      localStorage.removeItem('isLoggedin');
+      this.setState({ loggedIn: false });
+    }
+
     let isLoggedIn = localStorage.getItem('isLoggedin', true);
     if(isLoggedIn) {
       this.setState({ loggedIn: isLoggedIn });
     } else {
       this.setState({ loggedIn: false });
-      localStorage.removeItem('isLoggedin');
     }
   }
 
@@ -85,13 +91,12 @@ class App extends Component {
         <div className={this.state.loggedIn ? "App" : "App full-vh"}>
           <SearchBar onSearch={this.search} onLogIn={this.state.loggedIn} />
           <div className={this.state.loggedIn ? "App-playlist" : "App-playlist not-logged-in"} >
-            <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} onLogIn={this.state.loggedIn} />
+            <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
             <Playlist 
             	playlistTracks={this.state.playlistTracks}
             	onRemove={this.removeTrack}
             	onNameChange={this.updatePlaylistName}
-            	onSave={this.savePlaylist}
-              onLogIn={this.state.loggedIn} />
+            	onSave={this.savePlaylist} />
           </div>
         </div>
       </div>

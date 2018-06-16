@@ -9,9 +9,7 @@ const spotifyBaseURL = "https://api.spotify.com/v1";
 const Spotify = {
 	getAccessToken() {
 		if(accessToken) {
-			if(accessToken) {
-				localStorage.setItem('isLoggedin', true);
-			}
+			localStorage.setItem('isLoggedin', true);
 			return accessToken;
 		} 
 		const pageUrl = window.location.href;
