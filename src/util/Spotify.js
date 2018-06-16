@@ -1,13 +1,18 @@
 let accessToken;
 let expiresIn;
-let keepSearchTerm;
+let loggedIn;
+//let keepSearchTerm;
+
 const clientID = "6b086cffcede44c69f78fa6d63854a28";
-const redirectURI = "http://myspotified.surge.sh";
+const redirectURI = "http://localhost:3000/";;
 const spotifyBaseURL = "https://api.spotify.com/v1";
 
 const Spotify = {
 	getAccessToken() {
 		if(accessToken) {
+			if(accessToken) {
+				localStorage.setItem('isLoggedin', true);
+			}
 			return accessToken;
 		} 
 		const pageUrl = window.location.href;
@@ -18,11 +23,21 @@ const Spotify = {
 		if(accessTokenFromURL && expirationTimeFromURL) {
 			accessToken = accessTokenFromURL[1];
 			expiresIn = Number(expirationTimeFromURL[1]);
-
 			window.setTimeout(() => accessToken = '', expiresIn * 1000);
+			setTimeout(function () {
+				if(accessToken) {
+					localStorage.removeItem('isLoggedin');
+				}
+			}, expiresIn * 1000)
 			window.history.pushState('Access Token', null, '/');
+			if(accessToken) {
+				localStorage.setItem('isLoggedin', true);
+			}
 			return accessToken;
 		} else {
+			if(!accessToken) {
+				localStorage.setItem('isLoggedin', true);
+			}
 			window.location = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
 		}
 	},

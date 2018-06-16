@@ -27,7 +27,7 @@ class SearchBar extends Component {
 		return (
 			<div className="SearchBar">
 				<input placeholder="Enter A Song Title" onChange={this.handleTermChange} />
-				<a onClick={this.search}>SEARCH</a>
+				<a onClick={this.search}>SEARCH {this.props.loggedIn}</a>
 			</div>
 		);
 	}

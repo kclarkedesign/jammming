@@ -10,6 +10,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loggedIn: false,
       searchResults: [],
       playlistName : "",
       playlistTracks: []
@@ -20,8 +21,10 @@ class App extends Component {
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
+    this.updateLogInState = this.updateLogInState.bind(this);
   }
 
+  
 
   addTrack(track) {
     if(this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
@@ -59,10 +62,21 @@ class App extends Component {
   	});
   }
 
+  updateLogInState() {
+   
+      this.setState({loggedIn: false});
+   
+    // if (value) {
+    //   this.setState({
+        
+    //   });
+    // }
+  } 
+
   search(searchTerm) {
   	Spotify.search(searchTerm).then(track => {
-		this.setState({searchResults: track});
-	});
+		  this.setState({searchResults: track});
+    });
   }
 
   render() {
@@ -70,8 +84,8 @@ class App extends Component {
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
-          <SearchBar onSearch={this.search} />
-          <div className="App-playlist">
+          <SearchBar onSearch={this.search} loggedIn={this.updateLogInState}/>
+          <div className="App-playlist" >
             <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
             <Playlist 
             	playlistTracks={this.state.playlistTracks}
